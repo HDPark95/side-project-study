@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev
+
+  server:
+    port: 8090
+
+  spring:
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher  # swagger2 ?? ?? ???
+
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/board?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      username: { id }
+      password: { password }
+
+
+    jpa: # JPA - DB ??? ??x
+      show-sql: true # JPA SQL? ?? ??(?? true)
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      properties:
+        hibernate:
+          format_sql: true # SQL? ???? ???? ??(?? true)
+
+  logging:
+    level:
+      org.hibernate.SQL: info
