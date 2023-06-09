@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "goods")
 @Entity
-public class Goods extends BaseEntity {
+public class  Goods extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,22 +48,23 @@ public class Goods extends BaseEntity {
     private Category category;
 
     @OneToMany(mappedBy = "goods")
-    private List<File> files;
+    private List<Files> files;
 
     @OneToOne(mappedBy = "goods")
     private OptionSetting optionSetting;
 
     @Builder
-    public Goods(Long id, String name, String description, GoodsStatus goodsStatus,
-                 Long price, Long stock, Account seller, Category category, List<File> files) {
+    public Goods(Long id, String name, String description, Long price,
+                 Long stock, Account seller, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.goodsStatus = goodsStatus;
         this.price = price;
         this.stock = stock;
+        this.goodsStatus = GoodsStatus.getStatus(stock);
         this.seller = seller;
         this.category = category;
-        this.files = files;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package io.study.sideproject.domain.goods.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,4 +12,10 @@ public enum GoodsStatus {
 
     private final String viewName;
 
+    public static GoodsStatus getStatus(Long stock) {
+        if (stock.compareTo(0L) > 0) {
+            return SELLING;
+        }
+        return SOLD_OUT;
+    }
 }
