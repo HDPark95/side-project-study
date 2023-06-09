@@ -3,7 +3,6 @@ package io.study.sideproject.domain.coupon.request;
 import io.study.sideproject.domain.coupon.entity.CouponStatus;
 import io.study.sideproject.domain.coupon.entity.CouponType;
 import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 
 @Getter
