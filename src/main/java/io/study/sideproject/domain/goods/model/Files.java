@@ -1,18 +1,17 @@
 package io.study.sideproject.domain.goods.model;
 
 import io.study.sideproject.domain.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "files")
 @Entity
-public class File extends BaseEntity {
+public class Files extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +28,10 @@ public class File extends BaseEntity {
     private String originalName;
 
     @Column(nullable = false)
+    private String storeName;
+
+    @Setter
+    @Column(nullable = false)
     private String filePath;
 
     @Column(nullable = false)
@@ -39,15 +42,29 @@ public class File extends BaseEntity {
     private Goods goods;
 
     @Builder
-
-    public File(Long id, Long size, String extension, String originalName,
-                String filePath, Boolean representative, Goods goods) {
+    public Files(Long id, MultipartFile image, String filePath, Boolean representative, Goods goods) {
         this.id = id;
-        this.size = size;
-        this.extension = extension;
-        this.originalName = originalName;
+        setFile(image);
         this.filePath = filePath;
         this.representative = representative;
         this.goods = goods;
     }
+
+    private void setFile(MultipartFile image) {
+        this.size = image.getSize();
+        this.originalName = image.getOriginalFilename();
+        this.extension = extractExt();
+        this.storeName = createStoreFileName();
+    }
+
+    private String extractExt() {
+        int pos = originalName.lastIndexOf(".");
+        return originalName.substring(pos + 1);
+    }
+
+    private String createStoreFileName() {
+        String uuid = UUID.randomUUID().toString();
+        return uuid + "." + extension;
+    }
+
 }
