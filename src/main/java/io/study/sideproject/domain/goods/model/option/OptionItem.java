@@ -22,12 +22,12 @@ public class OptionItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "options_id")
-    private OptionItem optionItem;
+    private Option option;
 
     @Builder
-    public OptionItem(Long id, String value, OptionItem optionItem) {
+    public OptionItem(Long id, String value, Option option) {
         this.id = id;
         this.value = value;
-        this.optionItem = optionItem;
+        this.option = option;
     }
 }

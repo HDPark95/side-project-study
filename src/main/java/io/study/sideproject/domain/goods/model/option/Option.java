@@ -26,7 +26,7 @@ public class Option {
     @JoinColumn(name = "option_setting_id", nullable = false)
     private OptionSetting optionSetting;
 
-    @OneToMany(mappedBy = "optionItem")
+    @OneToMany(mappedBy = "option")
     private List<OptionItem> optionItems;
 
     @Builder

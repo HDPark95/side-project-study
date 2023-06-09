@@ -1,5 +1,6 @@
 package io.study.sideproject.domain.goods.model.option;
 
+import io.study.sideproject.domain.goods.dto.OptionRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,5 +41,13 @@ public class OptionSetting {
         this.size = size;
         this.sort = sort;
         this.goods = goods;
+    }
+
+    public static OptionSetting create(OptionRequest request, Goods goods) {
+        return OptionSetting.builder()
+                .size(request.getSize())
+                .sort(OptionSort.valueOf(request.getSort()))
+                .goods(goods)
+                .build();
     }
 }
