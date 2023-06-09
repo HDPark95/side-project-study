@@ -11,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-
 import java.util.List;
-
 import static io.study.sideproject.domain.coupon.entity.QCoupon.*;
 
 @RequiredArgsConstructor
@@ -45,11 +43,6 @@ public class CouponRepositoryCustomImpl implements CouponRepositoryCustom{
 
         return PageableExecutionUtils.getPage(couponList, pageable, countQuery::fetchOne);
     }
-
-    private String couponCode;
-    private String couponName;
-    private CouponType couponType;
-    private CouponStatus couponStatus;
 
     private BooleanExpression eqCouponCode(String couponCode) {
         if (couponCode == null || couponCode.isEmpty()) {
