@@ -31,6 +31,9 @@ dependencies {
 	//security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+
 	implementation "com.querydsl:querydsl-jpa:5.0.0"
 
 	annotationProcessor(
