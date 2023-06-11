@@ -5,6 +5,7 @@ import io.study.sideproject.domain.goods.dto.GoodsCreateRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import io.study.sideproject.domain.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +27,10 @@ public class GoodsServiceImpl implements GoodsService{
                        MultipartFile representativeImage,List<MultipartFile> images) {
 
         Goods goods = Goods.builder()
-                .name(request.getName()).description(request.getDescription())
-                .price(request.getPrice()).stock(request.getStock())
+                .name(request.getName())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .stock(request.getStock())
                 .seller(account)
                 .category(categoryService.findByName(request.getCategory()))
                 .build();
