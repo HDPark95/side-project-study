@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,33 +27,39 @@ public class OptionServiceImpl implements OptionService{
 
     @Transactional
     @Override
-    public void create(OptionRequest optionRequest, Goods goods) {
+    public void create(OptionRequest request, Goods goods) {
         OptionSetting optionSetting = optionSettingRepository.save(
-                OptionSetting.create(optionRequest, goods)
+                OptionSetting.create(request, goods)
+        );
+        List<Option> options = new ArrayList<>();
+        List<OptionItem> optionItems = new ArrayList<>();
+
+        request.getOptions().forEach(
+                (name, values) -> {
+                    Option option = Option.builder()
+                            .name(name)
+                            .optionSetting(optionSetting)
+                            .build();
+                    options.add(option);
+                    optionItems.addAll(values.stream()
+                            .map(value -> OptionItem.builder()
+                            .value(value)
+                            .option(option)
+                            .build())
+                            .collect(Collectors.toList()));
+                }
         );
 
-        optionRequest.getOptions().forEach(
-                (name, value) -> createOption(name, value, optionSetting)
-        );
+        List<OptionList> optionLists = request.getOptionList().stream()
+                .map(list -> OptionList.builder().request(list)
+                        .optionItems(optionItems)
+                        .build())
+                .collect(Collectors.toList());
 
-        // TODO : OptionList 만들기
+        optionRepository.saveAll(options);
+        optionItemRepository.saveAll(optionItems);
+        optionListRepository.saveAll(optionLists);
     }
 
-    @Transactional
-    public void createOption(String name, List<String> values, OptionSetting optionSetting) {
-        Option option = Option.builder()
-                .name(name)
-                .optionSetting(optionSetting)
-                .build();
-        optionRepository.save(option);
-        values.forEach((value) -> createOptionItem(value, option));
-    }
 
-    @Transactional
-    public void createOptionItem(String value, Option option) {
-        optionItemRepository.save(OptionItem.builder()
-                        .value(value)
-                        .option(option)
-                        .build());
-    }
 }

@@ -30,9 +30,10 @@ public class Option {
     private List<OptionItem> optionItems;
 
     @Builder
-    public Option(Long id, String name, OptionSetting optionSetting) {
+    public Option(Long id, String name, OptionSetting optionSetting, List<OptionItem> optionItems) {
         this.id = id;
         this.name = name;
         this.optionSetting = optionSetting;
+        this.optionItems = optionItems;
     }
 }
