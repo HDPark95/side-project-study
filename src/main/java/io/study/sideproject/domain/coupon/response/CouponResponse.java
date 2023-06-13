@@ -12,12 +12,12 @@ import lombok.ToString;
 @ToString
 public class CouponResponse {
 
-    private Long id;
-    private String couponCode;
-    private String couponName;
-    private CouponType couponType;
-    private CouponStatus couponStatus;
-    private Status status;
+    private final Long id;
+    private final String couponCode;
+    private final String couponName;
+    private final CouponType couponType;
+    private final CouponStatus couponStatus;
+    private final Status status;
 
     @Builder
     public CouponResponse(Long id, String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus, Status status) {
