@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: dev
+
+  server:
+    port: 8090
+
+  spring:
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher  # swagger2 ?? ?? ???
+
+
+    jpa: # JPA - DB ??? ??x
+      show-sql: true # JPA SQL? ?? ??(?? true)
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      properties:
+        hibernate:
+          format_sql: true # SQL? ???? ???? ??(?? true)
+
+  logging:
+    level:
+      org.hibernate.SQL: info
+
+jwt:
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
