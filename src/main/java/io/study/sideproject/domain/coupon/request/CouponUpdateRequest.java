@@ -1,9 +1,11 @@
 package io.study.sideproject.domain.coupon.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.study.sideproject.domain.coupon.entity.CouponStatus;
 import io.study.sideproject.domain.coupon.entity.CouponType;
 import lombok.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,23 +13,20 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class CouponUpdateRequest {
 
-    @NotBlank(message = "쿠폰 코드는 필수로 입력해야합니다.")
     private String couponCode;
-
-    @NotBlank(message = "쿠폰 이름은 필수로 입력해야합니다.")
     private String couponName;
-
-    @NotBlank(message = "AMOUNT(금액) or PERCENTAGE(비율) 중에서 1개를 선택해야합니다.")
     private CouponType couponType;
-
-    @NotBlank(message = "USED(사용), UNUSED(미사용), EXPIRED(만료) 중에서 1개를 선택해야합니다.")
     private CouponStatus couponStatus;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
 
     @Builder
-    public CouponUpdateRequest(String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus) {
+    public CouponUpdateRequest(String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus, LocalDateTime startAt, LocalDateTime endAt) {
         this.couponCode = couponCode;
         this.couponName = couponName;
         this.couponType = couponType;
         this.couponStatus = couponStatus;
+        this.startAt = startAt;
+        this.endAt = endAt;
     }
 }

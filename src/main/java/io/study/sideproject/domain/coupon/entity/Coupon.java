@@ -37,15 +37,16 @@ public class Coupon extends BaseEntity {
     @Column(name = "coupon_status", nullable = false)
     private CouponStatus couponStatus;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    /*
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "start_at", nullable = false)
     private LocalDateTime startAt;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "end_at", nullable = false)
     private LocalDateTime endAt;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     private Seller seller;
@@ -56,13 +57,15 @@ public class Coupon extends BaseEntity {
     */
 
     @Builder
-    public Coupon(Long id, String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus, Status status) {
+    public Coupon(Long id, String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus, Status status, LocalDateTime startAt, LocalDateTime endAt) {
         this.id = id;
         this.couponCode = couponCode;
         this.couponName = couponName;
         this.couponType = couponType;
         this.couponStatus = couponStatus;
         this.status = status;
+        this.startAt = startAt;
+        this.endAt = endAt;
     }
 
     static public Coupon mapToEntity(CouponCreateRequest request) {
@@ -72,6 +75,8 @@ public class Coupon extends BaseEntity {
                 .couponType(request.getCouponType())
                 .couponStatus(CouponStatus.UNUSED)
                 .status(Status.ACTIVE)
+                .startAt(request.getStartAt())
+                .endAt(request.getEndAt())
                 .build();
     }
 
@@ -80,18 +85,18 @@ public class Coupon extends BaseEntity {
         this.couponName = request.getCouponName();
         this.couponType = request.getCouponType();
         this.couponStatus = request.getCouponStatus();
+        this.startAt = request.getStartAt();
+        this.endAt = request.getEndAt();
     }
 
     public void delete() {
         this.status = Status.REMOVE;
     }
 
-    /*
     // 쿠폰사용기한이 만료되면 CouponStatus를 EXPIRED로 변경
     public void updateCouponStatus() {
         if(this.endAt.isBefore(LocalDateTime.now())) {
             this.couponStatus = CouponStatus.EXPIRED;
         }
     }
-    */
 }

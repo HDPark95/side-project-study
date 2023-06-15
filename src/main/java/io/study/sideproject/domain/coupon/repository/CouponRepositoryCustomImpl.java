@@ -1,6 +1,7 @@
 package io.study.sideproject.domain.coupon.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.study.sideproject.domain.coupon.entity.Coupon;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import java.time.LocalDateTime;
 import java.util.List;
 import static io.study.sideproject.domain.coupon.entity.QCoupon.*;
 
@@ -27,7 +29,8 @@ public class CouponRepositoryCustomImpl implements CouponRepositoryCustom{
                 .where(eqCouponCode(searchRequest.getCouponCode()),
                        eqCouponName(searchRequest.getCouponName()),
                        eqCouponType(searchRequest.getCouponType()),
-                       eqCouponStatus(searchRequest.getCouponStatus()))
+                       eqCouponStatus(searchRequest.getCouponStatus()),
+                       dateBetween(searchRequest.getStartAt(), searchRequest.getEndAt()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(coupon.couponCode.asc())
@@ -48,14 +51,14 @@ public class CouponRepositoryCustomImpl implements CouponRepositoryCustom{
         if (couponCode == null || couponCode.isEmpty()) {
             return null;
         }
-        return coupon.couponCode.eq(couponCode);
+        return coupon.couponCode.like("%"+couponCode+"%");
     }
 
     private BooleanExpression eqCouponName(String couponName) {
         if (couponName == null || couponName.isEmpty()) {
             return null;
         }
-        return coupon.couponName.eq(couponName);
+        return coupon.couponName.like("%"+couponName+"%");
     }
 
     private BooleanExpression eqCouponType(CouponType couponType) {
@@ -70,5 +73,29 @@ public class CouponRepositoryCustomImpl implements CouponRepositoryCustom{
             return null;
         }
         return coupon.couponStatus.eq(couponStatus);
+    }
+
+    /*
+    private BooleanExpression eqStartAt(LocalDateTime startAt) {
+        if (startAt == null) {
+            return null;
+        }
+        return coupon.startAt.eq(startAt);
+    }
+
+    private BooleanExpression eqEndAt(LocalDateTime endAt) {
+        if (endAt == null) {
+            return null;
+        }
+        return coupon.endAt.eq(endAt);
+    }
+    */
+
+    private BooleanExpression dateBetween(LocalDateTime startAt, LocalDateTime endAt) {
+        if (endAt == null || startAt == null) {
+            return null;
+        }
+        return coupon.startAt.between(startAt, endAt)
+                .and(coupon.endAt.between(startAt, endAt));
     }
 }
