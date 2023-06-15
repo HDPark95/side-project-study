@@ -2,7 +2,10 @@ package io.study.sideproject.domain.review.entity;
 
 import io.study.sideproject.domain.common.BaseEntity;
 import io.study.sideproject.domain.common.Status;
+import io.study.sideproject.domain.coupon.request.CouponUpdateRequest;
 import io.study.sideproject.domain.review.request.ReviewCreateRequest;
+import io.study.sideproject.domain.review.request.ReviewUpdateRequest;
+import io.study.sideproject.domain.review.response.ReviewResponse;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -51,5 +54,10 @@ public class Review extends BaseEntity {
                 .rating(request.getRating())
                 .status(Status.ACTIVE)
                 .build();
+    }
+
+    public void update(ReviewUpdateRequest request) {
+        this.content = request.getContent();
+        this.rating = request.getRating();
     }
 }

@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @ToString
 public class ReviewResponse {
 
-    private Long id;
-    private String content;
-    private Integer rating;
+    private final Long id;
+    private final String content;
+    private final Integer rating;
 
     @Builder
     public ReviewResponse(Long id, String content, Integer rating) {

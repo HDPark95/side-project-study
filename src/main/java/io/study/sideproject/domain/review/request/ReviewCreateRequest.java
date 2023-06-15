@@ -1,8 +1,6 @@
 package io.study.sideproject.domain.review.request;
 
 import lombok.*;
-
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 @Getter
