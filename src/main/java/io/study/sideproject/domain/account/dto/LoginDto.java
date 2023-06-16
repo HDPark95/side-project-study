@@ -1,4 +1,4 @@
-package io.study.sideproject.domain.account.model;
+package io.study.sideproject.domain.account.dto;
 
 import lombok.Data;
 

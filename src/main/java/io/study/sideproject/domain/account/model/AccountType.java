@@ -1,5 +1,5 @@
 package io.study.sideproject.domain.account.model;
 
-public enum AccounType {
+public enum AccountType {
     ADMIN, USER, SELLER
 }

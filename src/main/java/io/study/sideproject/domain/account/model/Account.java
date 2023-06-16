@@ -18,7 +18,7 @@ public class Account extends BaseEntity{
 
     private String password;
 
-    private AccounType accountType;
+    private AccountType accountType;
 
     private String email;
 
