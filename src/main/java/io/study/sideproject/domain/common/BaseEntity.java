@@ -1,5 +1,6 @@
 package io.study.sideproject.domain.common;
 
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 
 import static javax.persistence.EnumType.STRING;
 
+@Getter
 @MappedSuperclass
 @EntityListeners(value = {AuditingEntityListener.class})
 public class BaseEntity {

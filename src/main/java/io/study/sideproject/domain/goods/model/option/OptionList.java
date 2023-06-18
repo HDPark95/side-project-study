@@ -2,6 +2,7 @@ package io.study.sideproject.domain.goods.model.option;
 
 import io.study.sideproject.domain.common.BaseEntity;
 import io.study.sideproject.domain.goods.dto.OptionListRequest;
+import io.study.sideproject.domain.goods.model.Goods;
 import io.study.sideproject.domain.goods.model.GoodsStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -44,11 +45,16 @@ public class OptionList extends BaseEntity {
     @JoinColumn(name = "option_item_id3")
     private OptionItem option3;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "goods_id")
+    private Goods goods;
+
     @Builder
-    public OptionList(OptionListRequest request, List<OptionItem> optionItems) {
+    public OptionList(OptionListRequest request, List<OptionItem> optionItems, Goods goods) {
         this.optionPrice = request.getOptionPrice();
         this.stock = request.getStock();
         this.goodsStatus = GoodsStatus.getStatus(request.getStock());
+        this.goods = goods;
 
         setOptionItem(filterOptionItem(request.getOptions(), optionItems));
     }

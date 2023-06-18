@@ -12,5 +12,5 @@ public enum OptionSort {
     HIGHEST_PRICE("높은 가격순"),
     LOWEST_PRICE("낮은 가격순");
 
-    public final String newName;
+    public final String viewName;
 }
