@@ -40,7 +40,7 @@ public class GoodsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GoodsResponse> getById() {
+    public ResponseEntity<GoodsResponse> getById(@PathVariable Long id) {
         GoodsResponse goods = goodsService.getById(id);
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
