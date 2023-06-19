@@ -31,6 +31,10 @@ public class SecurityConfig {
                 .antMatchers("/api/login").permitAll()
                 .anyRequest().permitAll()
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                .accessDeniedHandler(new JwtAccessDeniedHandler())
+                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
