@@ -40,7 +40,6 @@ public class AccountServiceImpl implements AccountService, UserDetailsService{
         return User.builder()
                 .username(account.getUsername())
                 .password(passwordEncoder.encode(account.getPassword()))
-                .roles(String.valueOf(account.getAccountType()))
                 .build();
     }
 
