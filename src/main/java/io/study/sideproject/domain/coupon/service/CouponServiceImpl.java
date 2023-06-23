@@ -45,9 +45,10 @@ public class CouponServiceImpl implements CouponService{
         log.info("CouponServiceImpl getCouponList() run");
 
         Page<Coupon> couponList = couponRepository.getCouponList(pageable, request);
-//        for(Coupon coupon : couponList) {
-//            coupon.updateCouponStatus();
-//        }
+
+        for(Coupon coupon : couponList) {
+            coupon.updateCouponStatus();
+        }
 
         return couponList.map(CouponResponse::mapToDto);
     }

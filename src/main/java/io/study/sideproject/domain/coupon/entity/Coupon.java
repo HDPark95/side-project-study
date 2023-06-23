@@ -1,6 +1,7 @@
 package io.study.sideproject.domain.coupon.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.study.sideproject.domain.account.model.Account;
 import io.study.sideproject.domain.common.BaseEntity;
 import io.study.sideproject.domain.common.Status;
 import io.study.sideproject.domain.coupon.request.CouponCreateRequest;
@@ -45,16 +46,6 @@ public class Coupon extends BaseEntity {
 
     @Column(name = "end_at", nullable = false)
     private LocalDateTime endAt;
-
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private Seller seller;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
-    */
 
     @Builder
     public Coupon(Long id, String couponCode, String couponName, CouponType couponType, CouponStatus couponStatus, Status status, LocalDateTime startAt, LocalDateTime endAt) {
