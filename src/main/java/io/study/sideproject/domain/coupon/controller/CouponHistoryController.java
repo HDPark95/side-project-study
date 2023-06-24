@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class CouponHistoryController {
     }
 
     // CouponHistory 삭제 (이력날짜 업데이트)
-    @PostMapping("/api/couponsHistory/{couponHistoryId}")
+    @PatchMapping("/api/couponsHistory/{couponHistoryId}")
     public ResponseEntity<CouponHistoryResponse> deleteCouponHistory(@PathVariable Long couponHistoryId) {
 
         log.info("CouponHistoryController deleteCouponHistory() run");

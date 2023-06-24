@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @ToString
 public class CouponHistoryResponse {
 
-    private Long id;
-    private CouponStatus couponStatus;
-    private LocalDateTime usedDate;
-    private LocalDateTime deletedDate;
-    private Coupon coupon;
-    private Account account;
+    private final Long id;
+    private final CouponStatus couponStatus;
+    private final LocalDateTime usedDate;
+    private final LocalDateTime deletedDate;
+    private final Coupon coupon;
+    private final Account account;
 
     @Builder
     public CouponHistoryResponse(Long id, CouponStatus couponStatus, LocalDateTime usedDate, LocalDateTime deletedDate, Coupon coupon, Account account) {
