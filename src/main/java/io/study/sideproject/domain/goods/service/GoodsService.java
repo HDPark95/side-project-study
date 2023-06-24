@@ -15,4 +15,6 @@ public interface GoodsService {
     List<GoodsResponse> getAll(Account account);
 
     GoodsResponse getById(Long id);
+
+    void delete(Long id);
 }

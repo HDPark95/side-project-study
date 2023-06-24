@@ -32,4 +32,16 @@ public class BaseEntity {
 
     @LastModifiedBy
     private Long modifiedBy;
+
+    public void remove() {
+        this.status = Status.REMOVE;
+    }
+
+    public void active() {
+        this.status = Status.ACTIVE;
+    }
+
+    public void cover() {
+        this.status = Status.PRIVATE;
+    }
 }

@@ -1,5 +1,6 @@
 package io.study.sideproject.domain.goods.model.option;
 
+import io.study.sideproject.domain.common.BaseEntity;
 import io.study.sideproject.domain.goods.dto.OptionRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "options_setting")
 @Entity
-public class OptionSetting {
+public class OptionSetting extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

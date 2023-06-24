@@ -2,6 +2,7 @@ package io.study.sideproject.domain.goods.model.option;
 
 import io.study.sideproject.domain.common.BaseEntity;
 import io.study.sideproject.domain.goods.dto.OptionListRequest;
+import io.study.sideproject.domain.goods.dto.OptionRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import io.study.sideproject.domain.goods.model.GoodsStatus;
 import lombok.AccessLevel;

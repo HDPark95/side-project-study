@@ -2,6 +2,7 @@ package io.study.sideproject.domain.goods.model;
 
 import io.study.sideproject.domain.account.model.Account;
 import io.study.sideproject.domain.common.BaseEntity;
+import io.study.sideproject.domain.common.Status;
 import io.study.sideproject.domain.goods.model.option.OptionList;
 import io.study.sideproject.domain.goods.model.option.OptionSetting;
 import io.study.sideproject.domain.goods.model.category.Category;
@@ -68,6 +69,10 @@ public class  Goods extends BaseEntity {
         this.goodsStatus = GoodsStatus.getStatus(stock);
         this.seller = seller;
         this.category = category;
+    }
+
+    public void delete() {
+        remove();
     }
 
 

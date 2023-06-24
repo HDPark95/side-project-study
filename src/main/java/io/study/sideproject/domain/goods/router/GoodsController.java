@@ -44,4 +44,10 @@ public class GoodsController {
         GoodsResponse goods = goodsService.getById(id);
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        goodsService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

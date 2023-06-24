@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -27,6 +28,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Transactional
+    @Override
     public void create(MultipartFile image, Goods goods, Boolean isRepresent) {
         Files files = Files.builder()
                 .image(image)
@@ -37,6 +39,15 @@ public class FilesServiceImpl implements FilesService {
                 cloudFileService.upload(image, files.getStoreName())
         );
         filesRepository.save(files);
+    }
+
+    @Transactional
+    @Override
+    public void delete(List<Files> files) {
+        cloudFileService.delete(files.stream()
+                .map(Files::getStoreName)
+                .collect(Collectors.toList()));
+        filesRepository.deleteAll(files);
     }
 
 

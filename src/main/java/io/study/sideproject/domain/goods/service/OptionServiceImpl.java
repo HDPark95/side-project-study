@@ -1,5 +1,7 @@
 package io.study.sideproject.domain.goods.service;
 
+import io.study.sideproject.common.exception.CustomException;
+import io.study.sideproject.common.exception.ErrorCode;
 import io.study.sideproject.domain.goods.dto.OptionRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import io.study.sideproject.domain.goods.model.option.*;
@@ -11,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,16 +50,29 @@ public class OptionServiceImpl implements OptionService{
                 }
         );
 
-        List<OptionList> optionLists = request.getOptionList().stream()
-                .map(list -> OptionList.builder().request(list)
-                        .optionItems(optionItems)
-                        .build())
-                .collect(Collectors.toList());
+        List<OptionList> optionLists = createList(request, optionItems);
 
         optionRepository.saveAll(options);
         optionItemRepository.saveAll(optionItems);
         optionListRepository.saveAll(optionLists);
     }
 
+    public List<OptionList> createList(OptionRequest request, List<OptionItem> optionItems) {
+        return request.getOptionList().stream()
+                .map(list -> OptionList.builder()
+                        .request(list)
+                        .optionItems(optionItems)
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        OptionSetting optionSetting = optionSettingRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OPTION));
+        optionSetting.remove();
+        optionSettingRepository.save(optionSetting);
+    }
 
 }

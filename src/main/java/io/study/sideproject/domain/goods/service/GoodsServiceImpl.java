@@ -1,5 +1,7 @@
 package io.study.sideproject.domain.goods.service;
 
+import io.study.sideproject.common.exception.CustomException;
+import io.study.sideproject.common.exception.ErrorCode;
 import io.study.sideproject.domain.account.model.Account;
 import io.study.sideproject.domain.goods.dto.GoodsResponse;
 import io.study.sideproject.domain.goods.dto.GoodsCreateRequest;
@@ -52,9 +54,22 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Override
     public GoodsResponse getById(Long id) {
-        Goods goods = goodsRepository.findById(id).orElseThrow();
+        Goods goods = goodsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_GOODS));
         return GoodsResponse.builder()
                 .goods(goods)
                 .build();
     }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        Goods goods = goodsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_GOODS));
+        goods.remove();
+        goodsRepository.save(goods);
+        fileService.delete(goods.getFiles());
+        optionService.delete(goods.getOptionSetting().getId());
+    }
+
 }
