@@ -2,6 +2,7 @@ package io.study.sideproject.domain.account.service;
 
 import io.study.sideproject.common.JwtTokenProvider;
 import io.study.sideproject.common.TokenInfo;
+import io.study.sideproject.domain.account.dto.JoinDto;
 import io.study.sideproject.domain.account.model.Account;
 import io.study.sideproject.domain.account.dto.LoginDto;
 import io.study.sideproject.domain.account.repository.AccountRepository;
@@ -39,7 +40,6 @@ public class AccountServiceImpl implements AccountService, UserDetailsService{
         return User.builder()
                 .username(account.getUsername())
                 .password(passwordEncoder.encode(account.getPassword()))
-                .roles(String.valueOf(account.getAccountType()))
                 .build();
     }
 
@@ -49,4 +49,24 @@ public class AccountServiceImpl implements AccountService, UserDetailsService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(token);
         return jwtTokenProvider.generateToken(authentication);
     }
+
+    @Override
+    public void join(JoinDto joinDto) {
+        Account account;
+        switch (joinDto.getAccountType()){
+            case SELLER:
+                account = joinDto.joinSeller();
+                break;
+            case CLIENT:
+                account = joinDto.joinClient();
+                break;
+            case ADMIN:
+                account = joinDto.joinAdmin();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + joinDto.getAccountType());
+        }
+        accountRepository.save(account);
+    }
+
 }
