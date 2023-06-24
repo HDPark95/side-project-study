@@ -2,6 +2,8 @@ package io.study.sideproject.domain.goods.model;
 
 import io.study.sideproject.domain.account.model.Account;
 import io.study.sideproject.domain.common.BaseEntity;
+import io.study.sideproject.domain.common.Status;
+import io.study.sideproject.domain.goods.model.option.OptionList;
 import io.study.sideproject.domain.goods.model.option.OptionSetting;
 import io.study.sideproject.domain.goods.model.category.Category;
 import lombok.AccessLevel;
@@ -53,6 +55,9 @@ public class  Goods extends BaseEntity {
     @OneToOne(mappedBy = "goods")
     private OptionSetting optionSetting;
 
+    @OneToMany(mappedBy = "goods")
+    private List<OptionList> optionLists;
+
     @Builder
     public Goods(Long id, String name, String description, Long price,
                  Long stock, Account seller, Category category) {
@@ -64,6 +69,10 @@ public class  Goods extends BaseEntity {
         this.goodsStatus = GoodsStatus.getStatus(stock);
         this.seller = seller;
         this.category = category;
+    }
+
+    public void delete() {
+        remove();
     }
 
 

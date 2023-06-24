@@ -1,16 +1,19 @@
 package io.study.sideproject.domain.goods.service;
 
+import io.study.sideproject.common.exception.CustomException;
+import io.study.sideproject.common.exception.ErrorCode;
 import io.study.sideproject.domain.account.model.Account;
+import io.study.sideproject.domain.goods.dto.GoodsResponse;
 import io.study.sideproject.domain.goods.dto.GoodsCreateRequest;
 import io.study.sideproject.domain.goods.model.Goods;
 import io.study.sideproject.domain.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,4 +41,35 @@ public class GoodsServiceImpl implements GoodsService{
         optionService.create(request.getOption(), goods);
         fileService.create(representativeImage, images, goods);
     }
+
+    @Override
+    public List<GoodsResponse> getAll(Account account) {
+        return goodsRepository.findAllByUsername(account.getUsername())
+                .stream()
+                .map(goods -> GoodsResponse.builder()
+                                        .goods(goods)
+                                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public GoodsResponse getById(Long id) {
+        Goods goods = goodsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_GOODS));
+        return GoodsResponse.builder()
+                .goods(goods)
+                .build();
+    }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        Goods goods = goodsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_GOODS));
+        goods.remove();
+        goodsRepository.save(goods);
+        fileService.delete(goods.getFiles());
+        optionService.delete(goods.getOptionSetting().getId());
+    }
+
 }
